@@ -1,4 +1,10 @@
 import requests
+import re
 
-rst = requests.get('https://raw.githubusercontent.com/suzukaotto/version-test/refs/heads/master/VERSION')
-print(rst.text)
+git_version_doc = requests.get('https://github.com/suzukaotto/version-test/blob/master/VERSION').text
+
+match = re.search(r'\[SWVERSION\](.*?)\[SWVERSIONEND\]', git_version_doc)
+
+if match:
+    result = match.group(1)
+    print(result)
